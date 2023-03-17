@@ -1,42 +1,42 @@
-import { CanceledError } from "axios";
-import { useState, useEffect } from "react";
-import apiClient from "../services/client-api";
+import useData from "./useData";
 
-interface Genre {
+export interface Genre {
   id: number;
   name: string;
 }
 
-interface FetchGenreResponse {
-  count: number;
-  results: Genre[];
-}
+// interface FetchGenreResponse {
+//   count: number;
+//   results: Genre[];
+// }
 
-const useGenres = () => {
-  const [genres, setGenres] = useState<Genre[]>([]);
-  const [error, setErrors] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+const useGenres = () => useData<Genre>("/genres");
 
-  useEffect(() => {
-    const controller = new AbortController();
+// const useGenres = () => {
+//   const [genres, setGenres] = useState<Genre[]>([]);
+//   const [error, setErrors] = useState("");
+//   const [isLoading, setIsLoading] = useState(false);
 
-    setIsLoading(true);
-    apiClient
-      .get<FetchGenreResponse>("/genres", { signal: controller.signal })
-      .then((res) => {
-        setGenres(res.data.results);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        if (err instanceof CanceledError) return;
-        setErrors(err.message);
-        setIsLoading(false);
-      });
+//   useEffect(() => {
+//     const controller = new AbortController();
 
-    return () => controller.abort();
-  }, []);
+//     setIsLoading(true);
+//     apiClient
+//       .get<FetchGenreResponse>("/genres", { signal: controller.signal })
+//       .then((res) => {
+//         setGenres(res.data.results);
+//         setIsLoading(false);
+//       })
+//       .catch((err) => {
+//         if (err instanceof CanceledError) return;
+//         setErrors(err.message);
+//         setIsLoading(false);
+//       });
 
-  return { genres, error, isLoading };
-};
+//     return () => controller.abort();
+//   }, []);
+
+//   return { genres, error, isLoading };
+// };
 
 export default useGenres;
