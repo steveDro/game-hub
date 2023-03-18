@@ -9,12 +9,21 @@ import GameCardSkeleton from "./GameCardSkeleton";
 interface Props {
   selectedGenre: Genre | null;
   selectedPlatform: Platform | null;
+  selectedSortOrder: string;
 }
 
-const GameGrid = ({ selectedGenre, selectedPlatform }: Props) => {
-  console.log(selectedGenre, selectedPlatform);
-  const { data, error, isLoading } = useGames(selectedGenre, selectedPlatform);
+const GameGrid = ({
+  selectedGenre,
+  selectedPlatform,
+  selectedSortOrder,
+}: Props) => {
+  const { data, error, isLoading } = useGames(
+    selectedGenre,
+    selectedPlatform,
+    selectedSortOrder
+  );
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+
   return (
     <>
       {error && <Text>{error}</Text>}
