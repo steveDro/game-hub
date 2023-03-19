@@ -1,4 +1,4 @@
-import { Box, Flex, Grid, GridItem, HStack, Show } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Show } from "@chakra-ui/react";
 import { useState } from "react";
 import GameGrid from "./components/GameGrid";
 import GenreList from "./components/GenreList";
@@ -15,6 +15,7 @@ function App() {
   );
 
   const [selectedOrder, setSelectedOrder] = useState("");
+  const [searchText, setSearchText] = useState("");
 
   return (
     <Grid
@@ -28,7 +29,7 @@ function App() {
       }}
     >
       <GridItem area="nav">
-        <NavBar />
+        <NavBar onSearch={(searchText) => setSearchText(searchText)} />
       </GridItem>
       <Show above="lg">
         <GridItem area="aside" paddingX={5}>
@@ -55,6 +56,7 @@ function App() {
           selectedPlatform={selectedPlatform}
           selectedGenre={selectedGenre}
           selectedSortOrder={selectedOrder}
+          searchText={searchText}
         />
       </GridItem>
     </Grid>
